@@ -126,6 +126,7 @@
                         <outlet property="courseLabel" destination="ff0-uO-VFC" id="JVC-MM-A1e"/>
                         <outlet property="latitudeLabel" destination="fzk-lk-WVM" id="k4J-L4-wLq"/>
                         <outlet property="longitudeLabel" destination="0XQ-aq-IFN" id="2op-S8-KVK"/>
+                        <outlet property="map" destination="HBQ-hQ-oTa" id="2CJ-uf-caX"/>
                         <outlet property="speedLabel" destination="DmQ-pB-j4d" id="j3F-Rd-tLj"/>
                     </connections>
                 </viewController>

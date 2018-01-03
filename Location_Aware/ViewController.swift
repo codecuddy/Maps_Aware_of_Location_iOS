@@ -12,6 +12,8 @@ import MapKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    @IBOutlet weak var map: MKMapView!
+    
     @IBOutlet weak var latitudeLabel: UILabel!
     
     @IBOutlet weak var longitudeLabel: UILabel!
@@ -34,6 +36,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,10 +100,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     self.addressLabel.text = address
                 }
             }
+            
+/*       -----------------------------------------------
+             ***** Center Map on the Current Location *****
+         -----------------------------------------------
+*/
+            let latitude: CLLocationDegrees = userLocation.coordinate.latitude
+            
+            let longitude: CLLocationDegrees = userLocation.coordinate.longitude
+            
+            let latDelta: CLLocationDegrees = 0.05
+            
+            let longDelta: CLLocationDegrees = 0.05
+            
+            let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
+            // let span: MKCoordinateSpanMake(latDelta, longDelta)  --> shortcut don't need to specify type
+            
+            let coordinates: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            
+            let region: MKCoordinateRegion = MKCoordinateRegionMake(coordinates, span)
+            
+            self.map.setRegion(region, animated: true)
         }
-/*       ---------------------------------------------------------
-         ***** CLGeocoder with definitions of each .property *****
-         ---------------------------------------------------------
+        
+        
+        
+        
+/*       ------------------------------------------------------------------
+         ***** 1st look at CLGeocoder + definitions of each .property *****
+         ------------------------------------------------------------------
          
         CLGeocoder().reverseGeocodeLocation(userLocation) { (placemarks, error) in
             
@@ -181,7 +210,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 
             }
             
-        } */
+        }
+*/
     }
     
 }
