@@ -12,7 +12,17 @@ import MapKit
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
-    @IBOutlet weak var map: MKMapView!
+    @IBOutlet weak var latitudeLabel: UILabel!
+    
+    @IBOutlet weak var longitudeLabel: UILabel!
+    
+    @IBOutlet weak var courseLabel: UILabel!
+    
+    @IBOutlet weak var speedLabel: UILabel!
+    
+    @IBOutlet weak var altitudeLabel: UILabel!
+    
+    @IBOutlet weak var addressLabel: UILabel!
     
     var locationManager = CLLocationManager()
     
@@ -34,7 +44,63 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         let userLocation: CLLocation = locations[0]
+        
+        self.latitudeLabel.text = String(userLocation.coordinate.latitude)
 
+        self.longitudeLabel.text = String(userLocation.coordinate.longitude)
+        
+        self.courseLabel.text = String(userLocation.course)
+        
+        self.speedLabel.text = String(userLocation.speed)
+        
+        self.altitudeLabel.text = String(userLocation.altitude)
+
+        CLGeocoder().reverseGeocodeLocation(userLocation) { (placemarks, error) in
+            
+            if error != nil {
+                print(error)
+            } else {
+                if let placemark = placemarks?[0] {
+                    var address = ""
+                    
+                    if placemark.subThoroughfare != nil {
+                        
+                        address += placemark.subThoroughfare! + " "
+                    }
+                    
+                    if placemark.thoroughfare != nil {
+                        
+                        address += placemark.thoroughfare! + "\n"
+                    }
+                    
+                    if placemark.locality != nil {
+                        
+                        address += placemark.locality! + "\n"
+                    }
+                    
+                    if placemark.administrativeArea != nil {
+                        
+                        address += placemark.administrativeArea! + "\n"
+                    }
+                    
+                    if placemark.postalCode != nil {
+                        
+                        address += placemark.postalCode! + "\n"
+                    }
+                    
+                    if placemark.country != nil {
+                        
+                        address += placemark.country! + "\n"
+                    }
+                    
+                    self.addressLabel.text = address
+                }
+            }
+        }
+/*       ---------------------------------------------------------
+         ***** CLGeocoder with definitions of each .property *****
+         ---------------------------------------------------------
+         
         CLGeocoder().reverseGeocodeLocation(userLocation) { (placemarks, error) in
             
             if error != nil {
@@ -115,7 +181,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 
             }
             
-        }
+        } */
     }
     
 }
