@@ -52,7 +52,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         self.latitudeLabel.text = String(userLocation.coordinate.latitude)
 
         self.longitudeLabel.text = String(userLocation.coordinate.longitude)
-        
+/*
+      Course information indicates the direction in which the device is moving and doesn’t necessarily reflect the orientation of the device itself. As a result, course information is primarily intended for apps that provide navigation information while the user is moving.
+*/
         self.courseLabel.text = String(userLocation.course)
         
         self.speedLabel.text = String(userLocation.speed)
@@ -62,7 +64,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         CLGeocoder().reverseGeocodeLocation(userLocation) { (placemarks, error) in
             
             if error != nil {
-                print(error)
+                print(error!)
             } else {
                 if let placemark = placemarks?[0] {
                     var address = ""
@@ -109,9 +111,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             
             let longitude: CLLocationDegrees = userLocation.coordinate.longitude
             
-            let latDelta: CLLocationDegrees = 0.05
+            let latDelta: CLLocationDegrees = 0.01
             
-            let longDelta: CLLocationDegrees = 0.05
+            let longDelta: CLLocationDegrees = 0.01
             
             let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
             // let span: MKCoordinateSpanMake(latDelta, longDelta)  --> shortcut don't need to specify type
